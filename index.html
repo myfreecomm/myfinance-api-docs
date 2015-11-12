@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>API Docs</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["json","xml"]);
         });
       </script>
   </head>
@@ -28,9 +28,8 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="json">json</a>
+              <a href="#" data-language-name="xml">xml</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -39,235 +38,193 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://app.myfinance.com.br'>Acessar o Myfinance</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id="introduction">Introduction</h1>
+        
+          <h1 id="introdu��o">Introdução</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>O MyFinance possui uma API REST para interagir com seus recursos através de XML ou JSON sobre HTTPS.</p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Cada recurso possui sua própria URI e pode ser manipulado de maneira isolada, tentando assim seguir os princípios REST ao máximo, utilizando os principais verbos HTTP de forma semântica (GET, POST, PUT, DELETE).</p>
 
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+          <h2 id="uso-geral">Uso Geral</h2>
 
-<h1 id="authentication">Authentication</h1>
+<p>Por padrão, a API deve ser acessada através das mesmas URLs e verbos HTTP da interface HTML normal, adicionando-se o formato desejado (.xml ou .json) ao final da URL, ou então passando os headers Content-type e Accept na requisição HTTP com os valores de acordo com o formato desejando (application/xml ou application/json, respectivamente).</p>
 
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+          <h2 id="suspens�o-do-acesso">Suspensão do acesso</h2>
 
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-<h1 id="kittens">Kittens</h1>
-
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre>
-<pre class="highlight shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
-
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-
-<p>This endpoint retrieves all kittens.</p>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/api/kittens</code></p>
-
-<h3 id="query-parameters">Query Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre class="highlight shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
-
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Exemplo de resposta com erro</p>
 </blockquote>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Conta bloqueada por falta de pagamento. Entre em contato conosco via suporte@myfinance.com.br"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;errors&gt;</span>
+  <span class="nt">&lt;error&gt;</span>Conta bloqueada por falta de pagamento. Entre em contato conosco via suporte@myfinance.com.br<span class="nt">&lt;/error&gt;</span>
+<span class="nt">&lt;/errors&gt;</span>
+</code></pre>
 
-<p>This endpoint retrieves a specific kitten.</p>
+<p>Caso o sistema não localize o último pagamento de mensalidade, o acesso à API será bloqueado após 10 dias a contar da data de vencimento.</p>
 
-<aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+<aside class="notice">
+Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identificação do pagamento. O usuário deverá entrar em contato com o suporte para regularizar sua situação.
+</aside>
 
-<h3 id="http-request">HTTP Request</h3>
+<p>Caso o acesso à API seja efetuado neste período (10 dias após o vencimento da mensalidade), o sistema retornará uma mensagem de erro <code class="prettyprint">402: Payment Required</code>.</p>
 
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
+          <h2 id="compress�o-gzip">Compressão gzip</h2>
 
-<h3 id="url-parameters">URL Parameters</h3>
+<blockquote>
+<p>Exemplo de utilização da compressão <code class="prettyprint">gzip</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+       -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+       -H <span class="s1">'Content-type: application/json'</span> <span class="se">\</span>
+       -H <span class="s1">'Accept-Encoding: gzip'</span> <span class="se">\</span>
+       -X GET https://app.myfinance.com.br/entities/2593/attachments/25940
+</code></pre>
 
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
+<p>A compressão gzip é considerada sem perda de dados. As vantagens de utilizá-la são o menor uso da largura de banda e a maior velocidade na resposta.</p>
 
-          <h1 id="errors">Errors</h1>
+<p>Para utilizar o recurso da compressão gzip nas requisições, basta adicionar o header <code class="prettyprint">Accept-Encoding</code> com o valor <code class="prettyprint">gzip</code>.</p>
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
+<p>Caso a resposta esteja comprimida, ela conterá um header <code class="prettyprint">Content-Encoding</code> com o valor <code class="prettyprint">gzip</code>.</p>
 
-<p>The Kittn API uses the following error codes:</p>
+<p>Em alguns casos, mesmo que o servidor mande uma resposta comprimida, a requisição pode vir sem compressão, pois pode existir algum proxy no caminho da resposta que realize a descompressão dos dados (podendo ou não remover o header <code class="prettyprint">Content-Encoding</code>).</p>
 
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
-</tr>
-</tbody></table>
+<p>No exemplo ao lado, a requisição sem compressão possui um tamanho de 604 bytes. Quando comprimida, possui um tamanho de 290 bytes.</p>
+
+          <h1 id="autentica��o">Autenticação</h1>
+
+<blockquote>
+<p>Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr é o authentication_token do usuário):</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+       -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
+       -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
+       -X GET https://app.myfinance.com.br/people/816
+</code></pre>
+
+<p>Todo acesso à API é feito do ponto de vista de um usuário existente no MyFinance.</p>
+
+<p>Sendo assim, toda requisição à API deverá ser autenticada via HTTP Basic utilizando um token de acesso.</p>
+
+<p>No entant, em vez de utilizar o login e senha do usuário, como é tradicional, deve-se fornecer o <code class="prettyprint">authentication_token</code> do usuário (uma string de até 60 caracteres encontrada na página de perfil do usuário no Passaporte Web) no campo &lsquo;login&rsquo; e uma string vazia no campo &#39;password&rsquo;.</p>
+
+<p>Alguns clientes HTTP podem reclamar do fato do campo &#39;password&rsquo; estar vazio, nesse caso pode-se informar &#39;X&rsquo; como senha que o sistema irá ignorar.</p>
+
+<aside class="notice">
+Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr</code> pelo seu <code>authentication_token</code>.
+</aside>
+
+          <h2 id="m�ltiplas-contas">Múltiplas contas</h2>
+
+<blockquote>
+<p>Exemplo de utilização com múltiplas contas</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+       -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
+       -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
+       -H <span class="s2">"ACCOUNT_ID: 1"</span> <span class="se">\</span>
+       -X GET http://app.myfinance.com.br/people/816
+</code></pre>
+
+<h3 id="tenho-mais-de-uma-conta-como-devo-proceder">Tenho mais de uma conta, como devo proceder?</h3>
+
+<p>Caso você possua acesso a várias contas, será necessário informar o ID da conta que deseja utilizar.</p>
+
+<p>Isto é feito através do <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code> enviado no cabeçalho da requisição.</p>
+
+          <h2 id="erros-na-autentica��o">Erros na autenticação</h2>
+
+<h3 id="authentication_token-inv�lido"><code class="prettyprint">authentication_token</code> inválido</h3>
+
+<blockquote>
+<p>Exemplo de requisição sem informações de autenticação</p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
+       -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
+       -X GET -https://app.myfinance.com.br/people/816
+
+</code></pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unauthenticated"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;errors&gt;</span>
+  <span class="nt">&lt;error&gt;</span>unauthenticated<span class="nt">&lt;/error&gt;</span>
+<span class="nt">&lt;/errors&gt;</span>
+</code></pre>
+
+<p>Caso o usuário deixe de informar um <code class="prettyprint">authentication_token</code> ou este seja inválido, o sistema retornará um erro <code class="prettyprint">401: Unauthorized</code></p>
+
+<h3 id="erro-ao-n�o-informar-o-header-account_id">Erro ao não informar o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code></h3>
+
+<blockquote>
+<p>Exemplo de resposta com erro ao não informar o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+       -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
+       -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
+       -X GET http://app.myfinance.com.br/people/816
+</code></pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"O cabeçalho da requisição não possui o atributo ACCOUNT_ID"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unprocessable_entity"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"accounts"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"account"</span><span class="p">:{</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Conta Um"</span><span class="p">}},{</span><span class="nt">"account"</span><span class="p">:{</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Conta 2"</span><span class="p">}}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;errors&gt;</span>
+  <span class="nt">&lt;error&gt;</span>O cabeçalho da requisição não possui o atributo ACCOUNT_ID<span class="nt">&lt;/error&gt;</span>
+  <span class="nt">&lt;status&gt;</span>unprocessable_entity<span class="nt">&lt;/status&gt;</span>
+  <span class="nt">&lt;accounts</span> <span class="na">type=</span><span class="s">"array"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;account&gt;</span>
+      <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/id&gt;</span>
+      <span class="nt">&lt;name&gt;</span>Conta Um<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;/account&gt;</span>
+    <span class="nt">&lt;account&gt;</span>
+      <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>2<span class="nt">&lt;/id&gt;</span>
+      <span class="nt">&lt;name&gt;</span>Conta Dois<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;/account&gt;</span>
+  <span class="nt">&lt;/accounts&gt;</span>
+<span class="nt">&lt;/errors&gt;</span>
+</code></pre>
+
+<p>Se o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code> não for informado ou o valor informado não estiver associado ao <code class="prettyprint">authentication_token</code> utilizado,
+o sistema retornará uma mesagem de erro <code class="prettyprint">422: Unprocessable Entity</code>.</p>
+
+          <h2 id="autoriza��o-de-uso-da-api">Autorização de uso da API</h2>
+
+<blockquote>
+<p>Exemplo de resposta com erro por não estar autorizado a acessar a API</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Seu plano não permite o uso da API."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;errors&gt;</span>
+  <span class="nt">&lt;error&gt;</span>Seu plano não permite o uso da API.<span class="nt">&lt;/error&gt;</span>
+<span class="nt">&lt;/errors&gt;</span>
+</code></pre>
+
+<p>Apenas usuários de contas em planos Plus ou superior têm acesso autorizado à API.
+Caso o acesso à API seja feito utilizando um <code class="prettyprint">authentication_token</code> de um usuário cujo plano não permite acesso à API, uma resposta de erro <code class="prettyprint">403: Forbidden</code> será retornada.</p>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="json">json</a>
+                <a href="#" data-language-name="xml">xml</a>
           </div>
       </div>
     </div>
