@@ -25,6 +25,7 @@ includes:
   - entities/create
   - entities/update
   - entities/destroy
+  - categories
 
 search: true
 ---
