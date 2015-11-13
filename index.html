@@ -83,7 +83,7 @@ Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identi
 <blockquote>
 <p>Exemplo de utilização da compressão <code class="prettyprint">gzip</code></p>
 </blockquote>
-<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
        -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
        -H <span class="s1">'Content-type: application/json'</span> <span class="se">\</span>
        -H <span class="s1">'Accept-Encoding: gzip'</span> <span class="se">\</span>
@@ -103,9 +103,9 @@ Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identi
           <h1 id="autentica��o">Autenticação</h1>
 
 <blockquote>
-<p>Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr é o authentication_token do usuário):</p>
+<p>Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr:x é o authentication_token do usuário):</p>
 </blockquote>
-<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
        -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
        -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
        -X GET https://app.myfinance.com.br/people/816
@@ -120,7 +120,7 @@ Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identi
 <p>Alguns clientes HTTP podem reclamar do fato do campo &#39;password&rsquo; estar vazio, nesse caso pode-se informar &#39;X&rsquo; como senha que o sistema irá ignorar.</p>
 
 <aside class="notice">
-Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr</code> pelo seu <code>authentication_token</code>.
+Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr:x</code> pelo seu <code>authentication_token</code>.
 </aside>
 
           <h2 id="m�ltiplas-contas">Múltiplas contas</h2>
@@ -128,7 +128,7 @@ Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr</code> pelo seu <code>authent
 <blockquote>
 <p>Exemplo de utilização com múltiplas contas</p>
 </blockquote>
-<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
        -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
        -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
        -H <span class="s2">"ACCOUNT_ID: 1"</span> <span class="se">\</span>
@@ -171,7 +171,7 @@ Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr</code> pelo seu <code>authent
 <blockquote>
 <p>Exemplo de resposta com erro ao não informar o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code></p>
 </blockquote>
-<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr <span class="se">\</span>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
        -H <span class="s2">"Accept: application/xml"</span> <span class="se">\</span>
        -H <span class="s2">"Content-type: application/xml"</span> <span class="se">\</span>
        -X GET http://app.myfinance.com.br/people/816
@@ -219,6 +219,373 @@ o sistema retornará uma mesagem de erro <code class="prettyprint">422: Unproces
 
 <p>Apenas usuários de contas em planos Plus ou superior têm acesso autorizado à API.
 Caso o acesso à API seja feito utilizando um <code class="prettyprint">authentication_token</code> de um usuário cujo plano não permite acesso à API, uma resposta de erro <code class="prettyprint">403: Forbidden</code> será retornada.</p>
+
+          <h1 id="entidades">Entidades</h1>
+
+<p>Uma entidade representa uma unidade organizacional e ela pode ser uma pessoa jurídica ou uma pessoa física.</p>
+
+<p>Toda <code class="prettyprint">Account</code> tem no mínimo uma entidade. Os usuários que quiserem administrar empresas diferentes ou separar a gestão financeira entre matriz e filiais, por exemplo, poderão utilizar entidades diferentes.</p>
+
+<p>A maior parte dos recursos da API estarão aninhados à uma entidade específica, como por exemplo as Contas (DepositAccount), Lançamentos (FinancialTransaction), Contas a Pagar (PayableAccount), etc.</p>
+
+          <h2 id="recursos-dispon�veis">Recursos disponíveis</h2>
+
+<table><thead>
+<tr>
+<th>Recurso</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">POST /entities</code></td>
+<td><a href="#criar-entidade">Criar entidade</a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">GET /entities/:id</code></td>
+<td><a href="#informações-da-entidade">Informações da entidade</a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">GET /entities</code></td>
+<td><a href="#listar-entidades">Listar entidades</a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">PUT /entities/:id</code></td>
+<td><a href="#atualizar-entidade">Atualizar entidade</a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">DELETE /entities/:id</code></td>
+<td><a href="#excluir-entidade">Excluir entidade</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="dicion�rio-de-dados">Dicionário de dados</h2>
+
+<table><thead>
+<tr>
+<th>Parâmetro</th>
+<th>Tipo</th>
+<th>Default</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td><code class="prettyprint">String</code></td>
+<td><code class="prettyprint">NULL</code></td>
+<td>Nome da entidade</td>
+</tr>
+<tr>
+<td>federation_subscription_number</td>
+<td><code class="prettyprint">String</code></td>
+<td><code class="prettyprint">NULL</code></td>
+<td>CPF ou CNPJ da entidade</td>
+</tr>
+</tbody></table>
+
+          <h2 id="listar-entidades">Listar entidades</h2>
+
+<blockquote>
+<p><code class="prettyprint">GET /entities</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
+       -X GET https://app.myfinance.com.br/entities
+</code></pre>
+
+<blockquote>
+<p>Exemplo de resposta</p>
+</blockquote>
+
+<pre class="headers highlight json">
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Wed, 26 Jan 2011 13:11:23 GMT
+</pre>
+<pre class="highlight json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"entity"</span><span class="p">:</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"created_at"</span><span class="p">:</span><span class="s2">"2011-07-14T11:37:30-03:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"federation_subscription_number"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"force_destroy"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Nova"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="s2">"2011-07-14T11:37:30-03:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"entity"</span><span class="p">:</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"created_at"</span><span class="p">:</span><span class="s2">"2011-07-08T15:05:51-03:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"federation_subscription_number"</span><span class="p">:</span><span class="s2">"11111111111"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"force_destroy"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"account_id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Minhas Finanças"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="s2">"2011-07-14T15:13:43-03:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+
+<pre class="headers highlight xml">
+HTTP/1.1 200 OK
+Content-Type: application/xml; charset=utf-8
+Date: Wed, 26 Jan 2011 13:11:23 GMT
+</pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;entities</span> <span class="na">type=</span><span class="s">"array"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;entity&gt;</span>
+    <span class="nt">&lt;created-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T11:37:30-03:00<span class="nt">&lt;/created-at&gt;</span>
+    <span class="nt">&lt;federation-subscription-number</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/federation-subscription-number&gt;</span>
+    <span class="nt">&lt;force-destroy</span> <span class="na">type=</span><span class="s">"boolean"</span><span class="nt">&gt;</span>false<span class="nt">&lt;/force-destroy&gt;</span>
+    <span class="nt">&lt;account-id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/account-id&gt;</span>
+    <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>12<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Nova<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T11:37:30-03:00<span class="nt">&lt;/updated-at&gt;</span>
+    <span class="nt">&lt;deleted-at</span> <span class="na">type=</span><span class="s">"datetime"</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/deleted-at&gt;</span>
+  <span class="nt">&lt;/entity&gt;</span>
+  <span class="nt">&lt;entity&gt;</span>
+    <span class="nt">&lt;created-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-08T15:05:51-03:00<span class="nt">&lt;/created-at&gt;</span>
+    <span class="nt">&lt;federation-subscription-number&gt;</span>11111111111<span class="nt">&lt;/federation-subscription-number&gt;</span>
+    <span class="nt">&lt;force-destroy</span> <span class="na">type=</span><span class="s">"boolean"</span><span class="nt">&gt;</span>false<span class="nt">&lt;/force-destroy&gt;</span>
+    <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Minhas Finanças<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T15:13:43-03:00<span class="nt">&lt;/updated-at&gt;</span>
+    <span class="nt">&lt;deleted-at</span> <span class="na">type=</span><span class="s">"datetime"</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/deleted-at&gt;</span>
+  <span class="nt">&lt;/entity&gt;</span>
+<span class="nt">&lt;/entities&gt;</span>
+
+</code></pre>
+
+<p>Retorna uma lista de todas as entidades da <code class="prettyprint">Account</code>.</p>
+
+          <h2 id="informa��es-da-entidade">Informações da entidade</h2>
+
+<blockquote>
+<p><code class="prettyprint">GET /entities/:id</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
+       -X GET https://app.myfinance.com.br/entities/111
+</code></pre>
+
+<blockquote>
+<p>Exemplo de resposta</p>
+</blockquote>
+
+<pre class="headers highlight json">
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Wed, 26 Jan 2011 13:11:23 GMT
+</pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"entity"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="mi">42</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"account_id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="s2">"2011-07-08T15:05:51-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"federation_subscription_number"</span><span class="p">:</span><span class="s2">"11111111111"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"force_destroy"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"Minhas Finanças"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="s2">"2011-07-14T15:13:43-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<pre class="headers highlight xml">
+HTTP/1.1 200 OK
+Content-Type: application/xml; charset=utf-8
+Date: Wed, 26 Jan 2011 13:11:23 GMT
+</pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;entity&gt;</span>
+  <span class="nt">&lt;created-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-08T15:05:51-03:00<span class="nt">&lt;/created-at&gt;</span>
+  <span class="nt">&lt;federation-subscription-number&gt;</span>11111111111<span class="nt">&lt;/federation-subscription-number&gt;</span>
+  <span class="nt">&lt;force-destroy</span> <span class="na">type=</span><span class="s">"boolean"</span><span class="nt">&gt;</span>false<span class="nt">&lt;/force-destroy&gt;</span>
+  <span class="nt">&lt;account-id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/account-id&gt;</span>
+  <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>42<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;name&gt;</span>Minhas Finanças<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T15:13:43-03:00<span class="nt">&lt;/updated-at&gt;</span>
+  <span class="nt">&lt;deleted-at</span> <span class="na">type=</span><span class="s">"datetime"</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/deleted-at&gt;</span>
+<span class="nt">&lt;/entity&gt;</span>
+</code></pre>
+
+<p>Retorna os atributos da entidade especificada com uma resposta <code class="prettyprint">200: Ok</code>.</p>
+
+          <h2 id="criar-entidade">Criar entidade</h2>
+
+<blockquote>
+<p><code class="prettyprint">POST /entities</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
+       -X POST https://app.myfinance.com.br/entities <span class="se">\</span>
+       -d <span class="s1">'
+        {
+          "entity": {
+            "name": "Daily Bugle"
+          }
+        }
+       '</span>
+</code></pre>
+
+<blockquote>
+<p>Exemplo de resposta</p>
+</blockquote>
+
+<pre class="headers highlight json">
+HTTP/1.1 201 Created
+Location: https://app.myfinance.com.br/entities/111
+Content-Type: application/json; charset=utf-8
+Date: Wed, 26 Jan 2011 13:27:00 GMT
+</pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"entity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2011-07-14T16:10:15-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"federation_subscription_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"force_destroy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Daily Bugle"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2011-07-14T16:10:15-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<pre class="headers highlight xml">
+HTTP/1.1 201 Created
+Location: https://app.myfinance.com.br/entities/111
+Content-Type: application/xml; charset=utf-8
+Date: Wed, 26 Jan 2011 13:27:00 GMT
+</pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;entity&gt;</span>
+  <span class="nt">&lt;created-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T15:42:51-03:00<span class="nt">&lt;/created-at&gt;</span>
+  <span class="nt">&lt;federation-subscription-number</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/federation-subscription-number&gt;</span>
+  <span class="nt">&lt;force-destroy</span> <span class="na">type=</span><span class="s">"boolean"</span><span class="nt">&gt;</span>false<span class="nt">&lt;/force-destroy&gt;</span>
+  <span class="nt">&lt;account-id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/account-id&gt;</span>
+  <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>111<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;name&gt;</span>Daily Bugle<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T15:42:51-03:00<span class="nt">&lt;/updated-at&gt;</span>
+  <span class="nt">&lt;deleted-at</span> <span class="na">type=</span><span class="s">"datetime"</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/deleted-at&gt;</span>
+<span class="nt">&lt;/entity&gt;</span>
+</code></pre>
+
+<p>Cria uma nova entidade com os parâmetros informados. Em caso de sucesso, retorna <code class="prettyprint">201: Created</code>, juntamente com a URI da entidade criada no cabeçalho <code class="prettyprint">Location</code> da resposta HTTP.</p>
+
+<p>Em caso de falha, retorna <code class="prettyprint">422: Unprocessable entity</code> juntamente com a descrição dos erros.</p>
+
+          <h2 id="atualizar-entidade">Atualizar entidade</h2>
+
+<blockquote>
+<p><code class="prettyprint">PUT /entities/:id</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
+       -X PUT https://app.myfinance.com.br/entities/111 <span class="se">\</span>
+       -d <span class="s1">'
+        {
+          "entity": {
+            "name": "Daily Bugle Updated"
+          }
+        }
+       '</span>
+</code></pre>
+
+<blockquote>
+<p>Exemplo de resposta</p>
+</blockquote>
+
+<pre class="headers highlight json">
+HTTP/1.1 201 Created
+Location: https://app.myfinance.com.br/entities/111
+Content-Type: application/json; charset=utf-8
+Date: Wed, 26 Jan 2011 13:27:00 GMT
+</pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"entity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2011-07-14T16:10:15-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"federation_subscription_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"force_destroy"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">111</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Daily Bugle Updated"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2011-07-14T16:10:15-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"deleted_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<pre class="headers highlight xml">
+HTTP/1.1 201 Created
+Location: https://app.myfinance.com.br/entities/111
+Content-Type: application/xml; charset=utf-8
+Date: Wed, 26 Jan 2011 13:27:00 GMT
+</pre>
+<pre class="highlight xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;entity&gt;</span>
+  <span class="nt">&lt;created-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T15:42:51-03:00<span class="nt">&lt;/created-at&gt;</span>
+  <span class="nt">&lt;federation-subscription-number</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/federation-subscription-number&gt;</span>
+  <span class="nt">&lt;force-destroy</span> <span class="na">type=</span><span class="s">"boolean"</span><span class="nt">&gt;</span>false<span class="nt">&lt;/force-destroy&gt;</span>
+  <span class="nt">&lt;account-id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/account-id&gt;</span>
+  <span class="nt">&lt;id</span> <span class="na">type=</span><span class="s">"integer"</span><span class="nt">&gt;</span>111<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;name&gt;</span>Daily Bugle Updated<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2011-07-14T15:42:51-03:00<span class="nt">&lt;/updated-at&gt;</span>
+  <span class="nt">&lt;deleted-at</span> <span class="na">type=</span><span class="s">"datetime"</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/deleted-at&gt;</span>
+<span class="nt">&lt;/entity&gt;</span>
+</code></pre>
+
+<p>Altera a entidade especificada. Retorna uma resposta com o objeto alterado e <code class="prettyprint">200: Ok</code> em caso de sucesso ou uma resposta <code class="prettyprint">422: Unprocessable entity</code> com a descrição dos erros em caso de falha.</p>
+
+          <h2 id="excluir-entidade">Excluir entidade</h2>
+
+<blockquote>
+<p><code class="prettyprint">DELETE /entities/:id</code></p>
+</blockquote>
+<pre class="highlight shell"><code><span class="gp">$ </span>curl -u 7ezUPAqq8T1ny0w1bSXr:x <span class="se">\</span>
+       -X DELETE https://app.myfinance.com.br/entities/1
+</code></pre>
+
+<blockquote>
+<p>Exemplo de resposta</p>
+</blockquote>
+
+<pre class="headers highlight json">
+HTTP/1.1 202 Accepted
+Content-Type: application/json; charset=utf-8
+Date: Fri, 13 Nov 2015 14:21:03 GMT
+</pre>
+
+<pre class="headers highlight xml">
+HTTP/1.1 202 Accepted
+Content-Type: application/xml; charset=utf-8
+Date: Fri, 13 Nov 2015 14:21:03 GMT
+</pre>
+
+<p>Exclui a entidade especificada, retornando uma resposta com corpo vazio e status <code class="prettyprint">202: Accepted</code>.</p>
+
+<aside class="warning">
+Todos os recursos associados à entidade apagada também serão apagados!
+</aside>
+
+<p>A última entidade de uma Account não pode ser excluída. Caso você tente excluir a última entidade de uma conta, receberá uma resposta de erro <code class="prettyprint">422: Unprocessable entity</code> com uma resposta no body:</p>
+
+<p><code class="prettyprint">{ &quot;base&quot;: [&quot;Só existe uma entidade.&quot;, &quot;Não é possível apagar esta entidade.&quot;]}</code>.</p>
+
+<p>Outras mensagens de erro podem ocorrer:</p>
+
+<ul>
+<li>Existem Contas que precisam ser apagadas</li>
+<li>Existem Contas a Pagar/Contas a Receber que precisam ser apagadas</li>
+<li>Existem Centro de Custo/Receita que precisam ser apagados</li>
+</ul>
+
+<p>Se for o parâmetro <code class="prettyprint">force_destroy</code> com valor <code class="prettyprint">true</code>estiver presente, o myfinance considerará que o você deseja excluir todos os dados relacionados à entidade e não retornará as mensagens de erro acima.</p>
+
+<aside class="notice">
+A exclusão é feita em background. Enquanto a exclusão não tiver sido concluída, a entidade continuará constando na lista de entidades da conta, porém virá com o atributo `deleted_at` preenchido com a data e hora do momento da solicitação da exclusão.
+</aside>
 
       </div>
       <div class="dark-box">
