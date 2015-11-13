@@ -32,7 +32,7 @@ Caso o usuário deixe de informar um `authentication_token` ou este seja inváli
 > Exemplo de resposta com erro ao não informar o `header` `ACCOUNT_ID`
 
 ```shell
-$ curl -u 7ezUPAqq8T1ny0w1bSXr \
+$ curl -u 7ezUPAqq8T1ny0w1bSXr:x \
        -H "Accept: application/xml" \
        -H "Content-type: application/xml" \
        -X GET http://app.myfinance.com.br/people/816

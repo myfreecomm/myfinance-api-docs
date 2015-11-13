@@ -17,6 +17,14 @@ includes:
   - authentication/multiple_accounts
   - authentication/errors
   - authentication/authorization
+  - entities
+  - entities/resources
+  - entities/dictionary
+  - entities/index
+  - entities/show
+  - entities/create
+  - entities/update
+  - entities/destroy
 
 search: true
 ---

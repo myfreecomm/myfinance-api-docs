@@ -3,7 +3,7 @@
 > Exemplo de utilização da compressão `gzip`
 
 ```shell
-$ curl -u 7ezUPAqq8T1ny0w1bSXr \
+$ curl -u 7ezUPAqq8T1ny0w1bSXr:x \
        -H 'Accept: application/json' \
        -H 'Content-type: application/json' \
        -H 'Accept-Encoding: gzip' \

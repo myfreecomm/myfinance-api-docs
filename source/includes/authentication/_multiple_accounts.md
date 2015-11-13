@@ -3,7 +3,7 @@
 > Exemplo de utilização com múltiplas contas
 
 ```shell
-$ curl -u 7ezUPAqq8T1ny0w1bSXr \
+$ curl -u 7ezUPAqq8T1ny0w1bSXr:x \
        -H "Accept: application/xml" \
        -H "Content-type: application/xml" \
        -H "ACCOUNT_ID: 1" \

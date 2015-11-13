@@ -410,6 +410,10 @@ html, body {
   table {
     margin-bottom: 1em;
     overflow: auto;
+    display: table;
+    width: $examples-width - 2 * $table-margin;
+    margin: auto $table-margin;
+
     th,td {
       text-align: left;
       vertical-align: top;
@@ -552,7 +556,19 @@ html, body {
     @extend %code-font;
   }
 
+  pre.headers {
+    background-color: $code-annotation-bg;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #404040;
+  }
+
+  pre.headers + pre {
+    // padding-top: 0;
+  }
+
   blockquote {
+    padding: 0;
+
     &>p {
       background-color: $code-annotation-bg;
       border-radius: 5px;
@@ -560,6 +576,7 @@ html, body {
       color: #ccc;
       border-top: 1px solid #000;
       border-bottom: 1px solid #404040;
+      font-weight: 900;
     }
   }
 }

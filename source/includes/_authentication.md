@@ -1,9 +1,9 @@
 # Autenticação
 
-> Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr é o authentication_token do usuário):
+> Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr:x é o authentication_token do usuário):
 
 ```shell
-$ curl -u 7ezUPAqq8T1ny0w1bSXr \
+$ curl -u 7ezUPAqq8T1ny0w1bSXr:x \
        -H "Accept: application/xml" \
        -H "Content-type: application/xml" \
        -X GET https://app.myfinance.com.br/people/816
@@ -19,5 +19,5 @@ No entant, em vez de utilizar o login e senha do usuário, como é tradicional, 
 Alguns clientes HTTP podem reclamar do fato do campo 'password' estar vazio, nesse caso pode-se informar 'X' como senha que o sistema irá ignorar.
 
 <aside class="notice">
-Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr</code> pelo seu <code>authentication_token</code>.
+Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr:x</code> pelo seu <code>authentication_token</code>.
 </aside>
