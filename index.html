@@ -45,7 +45,7 @@
       <div class="dark-box"></div>
       <div class="content">
         
-          <h1 id="introdu��o">Introdução</h1>
+          <h1 id="introdução">Introdução</h1>
 
 <p>O MyFinance possui uma API REST para interagir com seus recursos através de XML ou JSON sobre HTTPS.</p>
 
@@ -55,7 +55,7 @@
 
 <p>Por padrão, a API deve ser acessada através das mesmas URLs e verbos HTTP da interface HTML normal, adicionando-se o formato desejado (.xml ou .json) ao final da URL, ou então passando os headers Content-type e Accept na requisição HTTP com os valores de acordo com o formato desejando (application/xml ou application/json, respectivamente).</p>
 
-          <h2 id="suspens�o-do-acesso">Suspensão do acesso</h2>
+          <h2 id="suspensão-do-acesso">Suspensão do acesso</h2>
 
 <blockquote>
 <p>Exemplo de resposta com erro</p>
@@ -78,7 +78,7 @@ Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identi
 
 <p>Caso o acesso à API seja efetuado neste período (10 dias após o vencimento da mensalidade), o sistema retornará uma mensagem de erro <code class="prettyprint">402: Payment Required</code>.</p>
 
-          <h2 id="compress�o-gzip">Compressão gzip</h2>
+          <h2 id="compressão-gzip">Compressão gzip</h2>
 
 <blockquote>
 <p>Exemplo de utilização da compressão <code class="prettyprint">gzip</code></p>
@@ -100,7 +100,7 @@ Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identi
 
 <p>No exemplo ao lado, a requisição sem compressão possui um tamanho de 604 bytes. Quando comprimida, possui um tamanho de 290 bytes.</p>
 
-          <h1 id="autentica��o">Autenticação</h1>
+          <h1 id="autenticação">Autenticação</h1>
 
 <blockquote>
 <p>Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr:x é o authentication_token do usuário):</p>
@@ -123,7 +123,7 @@ Nenhum dado da conta será apagado, apenas o acesso será suspenso até a identi
 Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr:x</code> pelo seu <code>authentication_token</code>.
 </aside>
 
-          <h2 id="m�ltiplas-contas">Múltiplas contas</h2>
+          <h2 id="múltiplas-contas">Múltiplas contas</h2>
 
 <blockquote>
 <p>Exemplo de utilização com múltiplas contas</p>
@@ -141,9 +141,9 @@ Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr:x</code> pelo seu <code>authe
 
 <p>Isto é feito através do <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code> enviado no cabeçalho da requisição.</p>
 
-          <h2 id="erros-na-autentica��o">Erros na autenticação</h2>
+          <h2 id="erros-na-autenticação">Erros na autenticação</h2>
 
-<h3 id="authentication_token-inv�lido"><code class="prettyprint">authentication_token</code> inválido</h3>
+<h3 id="authentication_token-inválido"><code class="prettyprint">authentication_token</code> inválido</h3>
 
 <blockquote>
 <p>Exemplo de requisição sem informações de autenticação</p>
@@ -166,7 +166,7 @@ Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr:x</code> pelo seu <code>authe
 
 <p>Caso o usuário deixe de informar um <code class="prettyprint">authentication_token</code> ou este seja inválido, o sistema retornará um erro <code class="prettyprint">401: Unauthorized</code></p>
 
-<h3 id="erro-ao-n�o-informar-o-header-account_id">Erro ao não informar o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code></h3>
+<h3 id="erro-ao-não-informar-o-header-account_id">Erro ao não informar o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code></h3>
 
 <blockquote>
 <p>Exemplo de resposta com erro ao não informar o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code></p>
@@ -202,7 +202,7 @@ Lembre-se de substituir <code>7ezUPAqq8T1ny0w1bSXr:x</code> pelo seu <code>authe
 <p>Se o <code class="prettyprint">header</code> <code class="prettyprint">ACCOUNT_ID</code> não for informado ou o valor informado não estiver associado ao <code class="prettyprint">authentication_token</code> utilizado,
 o sistema retornará uma mesagem de erro <code class="prettyprint">422: Unprocessable Entity</code>.</p>
 
-          <h2 id="autoriza��o-de-uso-da-api">Autorização de uso da API</h2>
+          <h2 id="autorização-de-uso-da-api">Autorização de uso da API</h2>
 
 <blockquote>
 <p>Exemplo de resposta com erro por não estar autorizado a acessar a API</p>
@@ -228,7 +228,7 @@ Caso o acesso à API seja feito utilizando um <code class="prettyprint">authenti
 
 <p>A maior parte dos recursos da API estarão aninhados à uma entidade específica, como por exemplo as Contas (DepositAccount), Lançamentos (FinancialTransaction), Contas a Pagar (PayableAccount), etc.</p>
 
-          <h2 id="recursos-dispon�veis">Recursos disponíveis</h2>
+          <h2 id="recursos-disponíveis">Recursos disponíveis</h2>
 
 <table><thead>
 <tr>
@@ -258,7 +258,7 @@ Caso o acesso à API seja feito utilizando um <code class="prettyprint">authenti
 </tr>
 </tbody></table>
 
-          <h2 id="dicion�rio-de-dados">Dicionário de dados</h2>
+          <h2 id="dicionário-de-dados">Dicionário de dados</h2>
 
 <table><thead>
 <tr>
@@ -361,7 +361,7 @@ Date: Wed, 26 Jan 2011 13:11:23 GMT
 
 <p>Retorna uma lista de todas as entidades da <code class="prettyprint">Account</code>.</p>
 
-          <h2 id="informa��es-da-entidade">Informações da entidade</h2>
+          <h2 id="informações-da-entidade">Informações da entidade</h2>
 
 <blockquote>
 <p><code class="prettyprint">GET /entities/:id</code></p>
@@ -586,6 +586,8 @@ Todos os recursos associados à entidade apagada também serão apagados!
 <aside class="notice">
 A exclusão é feita em background. Enquanto a exclusão não tiver sido concluída, a entidade continuará constando na lista de entidades da conta, porém virá com o atributo `deleted_at` preenchido com a data e hora do momento da solicitação da exclusão.
 </aside>
+
+          <h1 id="categorias">Categorias</h1>
 
       </div>
       <div class="dark-box">
