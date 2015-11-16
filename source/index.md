@@ -26,6 +26,14 @@ includes:
   - entities/update
   - entities/destroy
   - categories
+  - categories/resources
+  - categories/dictionary
+  - categories/index
+  - categories/show
+  - categories/create
+  - categories/update
+  - categories/destroy
+  - categories/create_subcategory
 
 search: true
 ---
